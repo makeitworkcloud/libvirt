@@ -21,15 +21,21 @@ resource "libvirt_domain" "template-server" {
     network_name = "default"
   }
   network_interface {
-    network_name = "internal"
+    bridge = "nm-bridge"
   }
   graphics {
-    type        = "vnc"
-    listen_type = "none"
+    type           = "vnc"
+    listen_type    = "address"
+    listen_address = "0.0.0.0"
+    autoport       = true
+  }
+  video {
+    type = "virtio"
   }
   boot_device {
-    dev = ["cdrom", "hd"]
+    dev = ["hd", "cdrom"]
   }
+  running    = false
   depends_on = [libvirt_volume.template-server]
 }
 

@@ -15,11 +15,16 @@ terraform {
     sops = {
       source = "carlpett/sops"
     }
+    ssh = {
+      source = "loafoe/ssh"
+    }
   }
 }
 
 provider "libvirt" {
   uri = data.sops_file.secret_vars.data["libvirt_uri"]
 }
+
+provider "ssh" {}
 
 provider "sops" {}
