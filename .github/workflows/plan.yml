@@ -26,6 +26,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
 
+      - name: Copy SSH area
+        run: cp -r /root/.ssh /github/home/
       - name: Run tests
         run: make test
 
