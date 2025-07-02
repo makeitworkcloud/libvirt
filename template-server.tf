@@ -36,6 +36,7 @@ resource "libvirt_domain" "template-server" {
     dev = ["hd", "cdrom"]
   }
   running    = false
+  type       = "kvm"
   depends_on = [libvirt_volume.template-server]
 }
 

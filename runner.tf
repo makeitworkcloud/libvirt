@@ -1,4 +1,4 @@
-resource "libvirt_volume" "runner" {
+/*resource "libvirt_volume" "runner" {
   name           = "runner.qcow2"
   base_volume_id = libvirt_volume.template-server.id
 }
@@ -54,6 +54,7 @@ resource "ssh_resource" "runner" {
     "sudo nmcli con mod ens4 ipv4.addresses ${data.sops_file.secret_vars.data["runner_ip_addr"]}",
     "sudo reboot"
   ]
+  type = "kvm"
   depends_on = [libvirt_domain.runner]
-}
+}*/
 
