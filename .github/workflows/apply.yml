@@ -28,5 +28,11 @@ jobs:
       - name: Copy SSH area
         run: cp -r /root/.ssh /github/home/
 
+      - name: Troubleshooting connectivity
+        run: |
+          ifconfig -a || echo
+          traceroute hero.makeitwork.cloud || echo
+          ping -c 3 hero.makeitwork.cloud || echo
+
       - name: Terraform apply
         run: make apply
