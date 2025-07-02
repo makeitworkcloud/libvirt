@@ -28,8 +28,5 @@ jobs:
       - name: Copy SSH area
         run: cp -r /root/.ssh /github/home/
 
-      - name: Sleep for ten minutes
-        run: sleep 600
-
       - name: Terraform apply
         run: make apply
