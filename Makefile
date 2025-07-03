@@ -5,7 +5,7 @@ S3_KEY        := $(shell sops decrypt secrets/secrets.yaml | grep ^s3_key       
 S3_ACCESS_KEY := $(shell sops decrypt secrets/secrets.yaml | grep ^s3_access_key | cut -d ' ' -f 2)
 S3_SECRET_KEY := $(shell sops decrypt secrets/secrets.yaml | grep ^s3_secret_key | cut -d ' ' -f 2)
 
-.PHONY: help init plan apply test pre-commit-check-deps pre-commit-install-hooks argocd-login argocd-sync sync clean
+.PHONY: help init plan apply test pre-commit-check-deps pre-commit-install-hooks clean
 
 help:
 	@echo "General targets"
