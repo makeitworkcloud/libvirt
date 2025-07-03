@@ -1,4 +1,4 @@
-/*resource "libvirt_volume" "runner" {
+resource "libvirt_volume" "runner" {
   name           = "runner.qcow2"
   base_volume_id = libvirt_volume.template-server.id
 }
@@ -33,6 +33,11 @@ resource "libvirt_domain" "runner" {
   depends_on = [libvirt_volume.runner]
 }
 
+resource "random_string" "runner" {
+  length  = 4
+  special = false
+}
+
 resource "ssh_resource" "runner" {
   host         = data.sops_file.secret_vars.data["ssh_host"]
   bastion_host = data.sops_file.secret_vars.data["ssh_bastion_host"]
@@ -48,7 +53,7 @@ resource "ssh_resource" "runner" {
     "cd actions-runner && curl -o ./actions-runner-linux-x64-2.325.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.325.0/actions-runner-linux-x64-2.325.0.tar.gz",
     "cd actions-runner && echo \"5020da7139d85c776059f351e0de8fdec753affc9c558e892472d43ebeb518f4  ./actions-runner-linux-x64-2.325.0.tar.gz\" | shasum -a 256 -c",
     "cd actions-runner && tar xzf ./actions-runner-linux-x64-2.325.0.tar.gz",
-    "cd actions-runner && ./config.sh --name runner-libvirt --labels libvirt --url https://github.com/makeitworkcloud --token ${data.sops_file.secret_vars.data["github_token"]}",
+    "cd actions-runner && ./config.sh --name libvirt-${random_string.runner.result} --labels libvirt --url https://github.com/makeitworkcloud --token ${data.sops_file.secret_vars.data["github_token"]}",
     "cd actions-runner && sudo chcon system_u:object_r:usr_t:s0 ./svc.sh",
     "cd actions-runner && sudo ./svc.sh install",
     "cd actions-runner && sudo chcon system_u:object_r:usr_t:s0 ./runsvc.sh",
@@ -56,5 +61,5 @@ resource "ssh_resource" "runner" {
     "sudo reboot"
   ]
   depends_on = [libvirt_domain.runner]
-}*/
+}
 
