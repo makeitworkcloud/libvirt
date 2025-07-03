@@ -12,7 +12,7 @@ env:
 jobs:
   plan:
     runs-on: arc-dind
-    container: image-registry.openshift-image-registry.svc:5000/arc-runners/terraform-runner:latest
+    container: image-registry.openshift-image-registry.svc:5000/public-registry/terraform-runner:latest
 
     steps:
       - uses: actions/checkout@v4
