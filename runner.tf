@@ -54,9 +54,7 @@ resource "ssh_resource" "runner" {
     "cd actions-runner && echo \"5020da7139d85c776059f351e0de8fdec753affc9c558e892472d43ebeb518f4  ./actions-runner-linux-x64-2.325.0.tar.gz\" | shasum -a 256 -c",
     "cd actions-runner && tar xzf ./actions-runner-linux-x64-2.325.0.tar.gz",
     "cd actions-runner && ./config.sh --name libvirt-${random_string.runner.result} --labels libvirt --url https://github.com/makeitworkcloud --token ${data.sops_file.secret_vars.data["github_token"]}",
-    "cd actions-runner && sudo chcon system_u:object_r:usr_t:s0 ./svc.sh",
     "cd actions-runner && sudo ./svc.sh install",
-    "cd actions-runner && sudo chcon system_u:object_r:usr_t:s0 ./runsvc.sh",
     "sudo nmcli con mod ens4 ipv4.addresses ${data.sops_file.secret_vars.data["runner_ip_addr"]}",
     "sudo reboot"
   ]
